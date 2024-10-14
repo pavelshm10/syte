@@ -40,14 +40,13 @@ const CatalogTable = ({ onOpenModal }: CatalogTableProps) => {
 
   const handleDelete = async (id: string) => {
     if (window.confirm("Are you sure you want to delete this catalog?")) {
-      try {
-        await deleteCatalog(id);
-        setCatalogs((prevCatalogs) =>
-          prevCatalogs.filter((catalog) => catalog._id !== id)
-        );
-      } catch (error) {
-        console.error("Error deleting catalog:", error);
-      }
+        try {
+            await deleteCatalog(id);
+            console.log('Catalog deleted successfully');
+            fetchCatalogs();
+          } catch (error) {
+            console.error('Error deleting catalog:', error);
+          }
     }
   };
 

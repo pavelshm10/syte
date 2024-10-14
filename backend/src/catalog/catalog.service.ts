@@ -42,4 +42,9 @@ export class CatalogService {
     });
     return newCatalog.save();
   }
+
+  async deleteCatalog(id: string): Promise<boolean> {
+    const result = await this.catalogModel.deleteOne({ _id: id }).exec();
+    return result.deletedCount > 0;
+  }
 }

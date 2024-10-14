@@ -7,6 +7,7 @@ import {
   Body,
   Param,
   Patch,
+  NotFoundException,
 } from '@nestjs/common';
 import { CatalogService } from './catalog.service';
 import { CreateCatalogDto } from './dto/create-catalog.dto';
@@ -34,8 +35,13 @@ export class CatalogController {
   async create(@Body() createCatalogDto: CreateCatalogDto): Promise<Catalog> {
     return this.catalogService.createCatalog(createCatalogDto);
   }
-  //   @Delete(':id')
-  //   delete(@Param('id') id: string) {
-  //     return this.catalogService.delete(id);
-  //   }
+  
+  @Delete(':id')
+  async deleteCatalog(@Param('id') id: string) {
+    const result = await this.catalogService.deleteCatalog(id);
+    if (!result) {
+      throw new NotFoundException('Catalog not found');
+    }
+    return { message: 'Catalog deleted successfully' };
+  }
 }

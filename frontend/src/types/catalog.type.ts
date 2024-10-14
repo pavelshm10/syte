@@ -1,5 +1,5 @@
 export interface Catalog {
-  _id?: string | null;
+  _id: string | null;
   name: string;
   vertical?: "fashion" | "home" | "general";
   primary: boolean;
