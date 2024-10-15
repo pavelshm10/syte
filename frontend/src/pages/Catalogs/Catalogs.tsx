@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Button, CircularProgress, TextField } from "@mui/material";
+import { Box, Button, Checkbox, CircularProgress, FormControlLabel, TextField } from "@mui/material";
 import { Catalog } from "../../types/catalog.type";
 import CatalogModal from "../../components/CatalogModal/CatalogModal";
 import CatalogTable from "../../components/CatalogTable/CatalogTable";
@@ -20,6 +20,7 @@ const Catalogs: React.FC = () => {
   const [currentCatalog, setCurrentCatalog] = useState<Catalog | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filteredCatalogs, setFilteredCatalogs] = useState<Catalog[]>([]);
+  const [isMultiLocalFilter, setIsMultiLocalFilter] = useState(false);
 
   useEffect(() => {
     dispatch(fetchCatalogs());
@@ -46,13 +47,20 @@ const Catalogs: React.FC = () => {
   useEffect(() => {
     if (!catalogs) return;
     setFilteredCatalogs(
-      searchTerm
-        ? catalogs.filter((catalog) =>
-            catalog.name.toLowerCase().includes(searchTerm.toLowerCase())
-          )
-        : catalogs
+      catalogs.filter((catalog: Catalog) => {
+        if (searchTerm.trim() !== '') {
+          return catalog.name.toLowerCase().includes(searchTerm.toLowerCase());
+        }
+        return true;
+      })
+      .filter((catalog: Catalog) => {
+        if (isMultiLocalFilter) {
+          return catalog.locales.length>1;
+        }
+        return true;
+      })
     );
-  }, [searchTerm, catalogs]);
+  }, [searchTerm, catalogs, isMultiLocalFilter]);
 
   return (
     <>
@@ -70,6 +78,15 @@ const Catalogs: React.FC = () => {
           value={searchTerm}
           sx={{ margin: "auto", width: 200 }}
           onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={isMultiLocalFilter}
+              onChange={(e) => setIsMultiLocalFilter(e.target.checked)}
+            />
+          }
+          label={CATALOGS.SHOW_MULTI_LOCAL_ONLY}
         />
       </div>
       <Box className={classes.catalogs_table}>
