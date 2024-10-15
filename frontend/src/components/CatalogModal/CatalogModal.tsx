@@ -12,9 +12,10 @@ import {
   Checkbox,
   FormControlLabel,
 } from "@mui/material";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import { Catalog } from "../../types/catalog.type";
 import { catalogSchema } from "../../validation/catalogSchema";
+import { FormBox } from "../../styles/catalogStyles";
 // import { Document, Types } from "mongoose";
 
 interface CatalogModalProps {
@@ -36,16 +37,7 @@ const CatalogModal = ({
   return (
     <Modal open={open} onClose={handleClose}>
       <Box
-        sx={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: 400,
-          bgcolor: "background.paper",
-          boxShadow: 24,
-          p: 4,
-        }}
+        sx={FormBox}
       >
         <Formik
           initialValues={{
@@ -144,6 +136,25 @@ const CatalogModal = ({
                     ? errors.locales
                     : "Select locales"}
                 </FormHelperText>
+              </FormControl>
+              <FormControl
+                error={touched.primary && Boolean(errors.primary)}
+                component="fieldset"
+                fullWidth
+              >
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      name="primary"
+                      checked={values.primary}
+                      onChange={handleChange}
+                    />
+                  }
+                  label="Primary"
+                />
+                {touched.primary && errors.primary && (
+                  <FormHelperText>{errors.primary}</FormHelperText>
+                )}
               </FormControl>
 
               <Button type="submit" variant="contained" color="primary">

@@ -1,7 +1,13 @@
 // src/store/slices/catalogsSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Catalog } from "../../types/catalog.type";
-import { addCatalog, deleteCatalogThunk, fetchCatalogs, updateCatalogThunk } from "./catalogThunk";
+import {
+  addCatalog,
+  deleteCatalogThunk,
+  fetchCatalogs,
+  updateCatalogThunk,
+} from "./catalogThunk";
+import { makeAllOtherCatlogsNoPrimary } from "../../utils/catalog.util";
 
 interface CatalogsState {
   catalogs: Catalog[];
@@ -38,6 +44,7 @@ const catalogsSlice = createSlice({
       .addCase(
         addCatalog.fulfilled,
         (state, action: PayloadAction<Catalog>) => {
+          makeAllOtherCatlogsNoPrimary(state.catalogs, action.payload);
           state.catalogs.push(action.payload);
         }
       )
@@ -48,6 +55,7 @@ const catalogsSlice = createSlice({
             (catalog) => catalog._id === action.payload._id
           );
           if (index !== -1) {
+            makeAllOtherCatlogsNoPrimary(state.catalogs, action.payload);
             state.catalogs[index] = action.payload;
           }
         }

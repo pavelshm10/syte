@@ -32,7 +32,7 @@ export class CatalogController {
   }
 
   @Post()
-  async create(@Body() createCatalogDto: CreateCatalogDto): Promise<Catalog> {
+  async createCatalog(@Body() createCatalogDto: CreateCatalogDto): Promise<Catalog> {
     return this.catalogService.createCatalog(createCatalogDto);
   }
   

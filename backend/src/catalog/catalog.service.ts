@@ -19,6 +19,12 @@ export class CatalogService {
     id: string,
     updateCatalogDto: UpdateCatalogDto,
   ): Promise<Catalog> {
+    if (updateCatalogDto.primary) {
+      await this.catalogModel.updateOne(
+        { vertical: updateCatalogDto.vertical, primary: true },
+        { primary: false },
+      );
+    }
     const updatedCatalog = await this.catalogModel.findByIdAndUpdate(
       id,
       {
@@ -36,6 +42,13 @@ export class CatalogService {
   }
 
   async createCatalog(createCatalogDto: CreateCatalogDto): Promise<Catalog> {
+    if (createCatalogDto.primary) {
+      await this.catalogModel.updateOne(
+        { vertical: createCatalogDto.vertical, primary: true },
+        { primary: false },
+      );
+    }
+
     const newCatalog = new this.catalogModel({
       ...createCatalogDto,
       indexedAt: new Date(),
