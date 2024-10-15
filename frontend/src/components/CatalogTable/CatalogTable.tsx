@@ -1,10 +1,4 @@
-import React, { useEffect, useState } from "react";
-import {
-  getCatalogs,
-  createCatalog,
-  updateCatalog,
-  deleteCatalog,
-} from "../../services/catalogService";
+import React, { useEffect } from "react";
 import {
   Button,
   Table,
@@ -17,36 +11,20 @@ import {
 } from "@mui/material";
 import classes from "./CatalogTable.module.css";
 import { Catalog } from "../../types/catalog.type";
+import { useAppDispatch, useAppSelector } from "../../store/hooks/useRedux";
+import { deleteCatalogThunk } from "../../store/catalog/catalogThunk";
 
 interface CatalogTableProps {
   onOpenModal: (catalog: Catalog) => void;
 }
 
 const CatalogTable = ({ onOpenModal }: CatalogTableProps) => {
-  const [catalogs, setCatalogs] = useState<Catalog[]>([]);
-
-  useEffect(() => {
-    fetchCatalogs();
-  }, []);
-
-  const fetchCatalogs = async () => {
-    try {
-      const response = await getCatalogs();
-      setCatalogs(response.data);
-    } catch (error) {
-      console.error("Error fetching catalogs:", error);
-    }
-  };
+  const dispatch = useAppDispatch();
+  const catalogs = useAppSelector((state) => state.catalogs.catalogs);
 
   const handleDelete = async (id: string) => {
     if (window.confirm("Are you sure you want to delete this catalog?")) {
-        try {
-            await deleteCatalog(id);
-            console.log('Catalog deleted successfully');
-            fetchCatalogs();
-          } catch (error) {
-            console.error('Error deleting catalog:', error);
-          }
+      dispatch(deleteCatalogThunk(id));
     }
   };
 
@@ -63,7 +41,7 @@ const CatalogTable = ({ onOpenModal }: CatalogTableProps) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {catalogs.map((catalog) => (
+          {catalogs.map((catalog: Catalog) => (
             <TableRow key={catalog.name}>
               <TableCell>{catalog.name}</TableCell>
               <TableCell>{catalog.vertical}</TableCell>
