@@ -11,6 +11,7 @@ import {
 } from "../../store/catalog/catalogThunk";
 import classes from "./Catalogs.module.css";
 import { CATALOGS } from "../../constants/catalogs";
+import { AddCatalogButton } from "../../styles/catalogStyles";
 const Catalogs: React.FC = () => {
   const loading = useAppSelector((state) => state.catalogs.loading);
   const catalogs = useAppSelector((state) => state.catalogs.catalogs);
@@ -58,7 +59,7 @@ const Catalogs: React.FC = () => {
       <div className={classes.navbar}>
         <Button
           variant="outlined"
-          sx={{ fontWeight: "bold" }}
+          sx={AddCatalogButton}
           onClick={() => setModalOpen(true)}
         >
           {CATALOGS.ADD_CATALOGS}
