@@ -1,4 +1,3 @@
-// src/store/slices/catalogsSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Catalog } from "../../types/catalog.type";
 import {

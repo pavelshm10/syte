@@ -16,7 +16,6 @@ import { Formik, Form } from "formik";
 import { Catalog } from "../../types/catalog.type";
 import { catalogSchema } from "../../validation/catalogSchema";
 import { FormBox } from "../../styles/catalogStyles";
-// import { Document, Types } from "mongoose";
 
 interface CatalogModalProps {
   open: boolean;
@@ -114,13 +113,6 @@ const CatalogModal = ({
                   name="locales"
                   value={values.locales}
                   onChange={handleChange}
-                  //   value={catalog.locales.join(", ")}
-                  //   onChange={(e) => {
-                  //     const values = e.target.value
-                  //       .split(",")
-                  //       .map((locale) => locale.trim());
-                  //     setFieldValue("locales", values);
-                  //   }}
                   onBlur={handleBlur}
                   label="Locales"
                   multiple

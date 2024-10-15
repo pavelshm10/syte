@@ -41,7 +41,8 @@ const CatalogTable = ({ onOpenModal, catalogs }: CatalogTableProps) => {
             <TableCell sx={CatalogTableHeaderStyles}>Name</TableCell>
             <TableCell sx={CatalogTableHeaderStyles}>Vertical</TableCell>
             <TableCell sx={CatalogTableHeaderStyles}>Primary</TableCell>
-            <TableCell sx={CatalogTableHeaderStyles}>Locales</TableCell>
+            <TableCell sx={CatalogTableHeaderStyles}>Multi Local</TableCell>
+            <TableCell>Last Indexed At</TableCell>
             <TableCell sx={CatalogTableHeaderStyles}>Actions</TableCell>
           </TableRow>
         </TableHead>
@@ -60,7 +61,12 @@ const CatalogTable = ({ onOpenModal, catalogs }: CatalogTableProps) => {
               <TableCell>
                 {catalog.primary ? GENERAL.YES : GENERAL.NO}
               </TableCell>
-              <TableCell>{catalog.locales.join(", ")}</TableCell>
+              <TableCell>{catalog.locales.length > 1 ? "Yes" : "No"}</TableCell>
+              <TableCell>
+                {catalog.indexedAt
+                  ? new Date(catalog.indexedAt).toLocaleString()
+                  : "Not Indexed"}
+              </TableCell>
               <TableCell>
                 <IconButton
                   onClick={() => onOpenModal(catalog)}
