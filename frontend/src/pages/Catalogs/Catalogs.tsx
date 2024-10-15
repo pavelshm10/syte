@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Box, Button, Checkbox, CircularProgress, FormControlLabel, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  Checkbox,
+  CircularProgress,
+  FormControlLabel,
+  TextField,
+} from "@mui/material";
 import { Catalog } from "../../types/catalog.type";
 import CatalogModal from "../../components/CatalogModal/CatalogModal";
 import CatalogTable from "../../components/CatalogTable/CatalogTable";
@@ -47,18 +54,21 @@ const Catalogs: React.FC = () => {
   useEffect(() => {
     if (!catalogs) return;
     setFilteredCatalogs(
-      catalogs.filter((catalog: Catalog) => {
-        if (searchTerm.trim() !== '') {
-          return catalog.name.toLowerCase().includes(searchTerm.toLowerCase());
-        }
-        return true;
-      })
-      .filter((catalog: Catalog) => {
-        if (isMultiLocalFilter) {
-          return catalog.locales.length>1;
-        }
-        return true;
-      })
+      catalogs
+        .filter((catalog: Catalog) => {
+          if (searchTerm.trim() !== "") {
+            return catalog.name
+              .toLowerCase()
+              .includes(searchTerm.toLowerCase());
+          }
+          return true;
+        })
+        .filter((catalog: Catalog) => {
+          if (isMultiLocalFilter) {
+            return catalog.locales.length > 1;
+          }
+          return true;
+        })
     );
   }, [searchTerm, catalogs, isMultiLocalFilter]);
 
@@ -89,16 +99,21 @@ const Catalogs: React.FC = () => {
           label={CATALOGS.SHOW_MULTI_LOCAL_ONLY}
         />
       </div>
-      <Box className={classes.catalogs_table}>
-        {loading ? (
+
+      {loading ? (
+        <Box
+          display="flex"
+          alignItems="center"
+          height="100vh"
+        >
           <CircularProgress size={80} />
-        ) : (
-          <CatalogTable
-            catalogs={filteredCatalogs}
-            onOpenModal={handleOpenModal}
-          />
-        )}
-      </Box>
+        </Box>
+      ) : (
+        <CatalogTable
+          catalogs={filteredCatalogs}
+          onOpenModal={handleOpenModal}
+        />
+      )}
       <CatalogModal
         open={modalOpen}
         handleClose={handleCloseModal}
