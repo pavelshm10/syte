@@ -33,9 +33,6 @@ const CatalogModal = ({
   catalog,
   handleSubmit,
 }: CatalogModalProps) => {
-  useEffect(() => {
-    console.log({ catalog });
-  }, [catalog]);
   return (
     <Modal open={open} onClose={handleClose}>
       <Box
@@ -60,7 +57,6 @@ const CatalogModal = ({
           }}
           validationSchema={catalogSchema}
           onSubmit={(values: Catalog, { setSubmitting }) => {
-            console.log({ values });
             handleSubmit(values);
             setSubmitting(false);
             handleClose();

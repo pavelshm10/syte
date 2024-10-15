@@ -1,6 +1,15 @@
-.catalogs_container {
+.navbar{
+  display: flex;
+  float: left;
+  gap: 15px;
+  padding: 10px;
+  /* width: 35%; */
+}
+
+.catalogs_table {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  display: flex;
+  padding: 10px;
 }
+
