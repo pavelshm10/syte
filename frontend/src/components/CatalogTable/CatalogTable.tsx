@@ -42,7 +42,7 @@ const CatalogTable = ({ onOpenModal, catalogs }: CatalogTableProps) => {
             <TableCell sx={CatalogTableHeaderStyles}>Vertical</TableCell>
             <TableCell sx={CatalogTableHeaderStyles}>Primary</TableCell>
             <TableCell sx={CatalogTableHeaderStyles}>Multi Local</TableCell>
-            <TableCell>Last Indexed At</TableCell>
+            <TableCell sx={CatalogTableHeaderStyles}>Last Indexed At</TableCell>
             <TableCell sx={CatalogTableHeaderStyles}>Actions</TableCell>
           </TableRow>
         </TableHead>
