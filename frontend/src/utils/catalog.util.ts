@@ -1,12 +1,13 @@
 import { Catalog } from "../types/catalog.type";
 
-export const makeAllOtherCatlogsNoPrimary = async (
+export const makeAllOtherCatlogsNoPrimary = (
   catalogs: Catalog[],
   values: Catalog
-) => {
-  catalogs.forEach((catalog) => {
+): Catalog[] => {
+  return catalogs.map(catalog => {
     if (catalog.vertical === values.vertical && catalog._id !== values._id) {
-      catalog.primary = false;
+      return { ...catalog, primary: false };
     }
+    return catalog;
   });
 };

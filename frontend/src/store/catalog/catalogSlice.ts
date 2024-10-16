@@ -43,18 +43,28 @@ const catalogsSlice = createSlice({
       .addCase(
         addCatalog.fulfilled,
         (state, action: PayloadAction<Catalog>) => {
-          makeAllOtherCatlogsNoPrimary(state.catalogs, action.payload);
+          if (action.payload.primary) {
+            state.catalogs = makeAllOtherCatlogsNoPrimary(
+              state.catalogs,
+              action.payload
+            );
+          }
           state.catalogs.push(action.payload);
         }
       )
       .addCase(
         updateCatalogThunk.fulfilled,
         (state, action: PayloadAction<Catalog>) => {
+          if (action.payload.primary) {
+            state.catalogs = makeAllOtherCatlogsNoPrimary(
+              state.catalogs,
+              action.payload
+            );
+          }
           const index = state.catalogs.findIndex(
             (catalog) => catalog._id === action.payload._id
           );
           if (index !== -1) {
-            makeAllOtherCatlogsNoPrimary(state.catalogs, action.payload);
             state.catalogs[index] = action.payload;
           }
         }

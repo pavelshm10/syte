@@ -40,7 +40,7 @@ const CatalogModal = ({
       >
         <Formik
           initialValues={{
-            _id: catalog?._id || null,
+            _id: catalog?._id,
             name: catalog?.name || "",
             vertical: catalog?.vertical,
             primary: catalog?.primary || false,
