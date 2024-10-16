@@ -17,16 +17,15 @@ import {
   updateCatalogThunk,
 } from "../../store/catalog/catalogThunk";
 import classes from "./Catalogs.module.css";
-import { CATALOGS } from "../../constants/catalogs";
-import { AddCatalogButton } from "../../styles/catalogStyles";
+import Navbar from "../../components/Navbar/Navbar";
 const Catalogs: React.FC = () => {
   const loading = useAppSelector((state) => state.catalogs.loading);
   const catalogs = useAppSelector((state) => state.catalogs.catalogs);
   const dispatch = useAppDispatch();
   const [modalOpen, setModalOpen] = useState(false);
   const [currentCatalog, setCurrentCatalog] = useState<Catalog | null>(null);
-  const [searchTerm, setSearchTerm] = useState<string>("");
   const [filteredCatalogs, setFilteredCatalogs] = useState<Catalog[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const [isMultiLocalFilter, setIsMultiLocalFilter] = useState(false);
 
   useEffect(() => {
@@ -34,6 +33,7 @@ const Catalogs: React.FC = () => {
   }, [dispatch]);
 
   const handleAddCatalog = async (values: Catalog) => {
+    console.log("add");
     dispatch(addCatalog(values));
   };
 
@@ -74,38 +74,15 @@ const Catalogs: React.FC = () => {
 
   return (
     <>
-      <div className={classes.navbar}>
-        <Button
-          variant="outlined"
-          sx={AddCatalogButton}
-          onClick={() => setModalOpen(true)}
-        >
-          {CATALOGS.ADD_CATALOGS}
-        </Button>
-        <TextField
-          label={CATALOGS.SEARCH_CATLOGS_BY_NAME}
-          variant="standard"
-          value={searchTerm}
-          sx={{ margin: "auto", width: 200 }}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={isMultiLocalFilter}
-              onChange={(e) => setIsMultiLocalFilter(e.target.checked)}
-            />
-          }
-          label={CATALOGS.SHOW_MULTI_LOCAL_ONLY}
-        />
-      </div>
-
+      <Navbar
+        onAddCatalog={() => setModalOpen(true)}
+        onSearchTerm={(searchTerm) => setSearchTerm(searchTerm)}
+        onMultiLocalChecked={(isMultiLocalChecked) =>
+          setIsMultiLocalFilter(isMultiLocalChecked)
+        }
+      />
       {loading ? (
-        <Box
-          display="flex"
-          alignItems="center"
-          height="100vh"
-        >
+        <Box display="flex" alignItems="center" height="100vh">
           <CircularProgress size={80} />
         </Box>
       ) : (

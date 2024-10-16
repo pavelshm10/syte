@@ -18,7 +18,7 @@ Make sure you have the following installed on your machine:
 git clone https://github.com/pavelshm10/syte
 cd syte
 
-Running Backend (NestJS) 
+#Running Backend (NestJS) 
 
 cd backend
 npm install
